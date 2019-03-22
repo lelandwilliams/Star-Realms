@@ -250,6 +250,47 @@
 		(color blue) (primary-special 1) (ally-combat 2))
 
 	(card (name "Mech World") (id 87) (type outpost) (cost 5)
-		(defense 6) (primary-special 1))
+		(color red) (defense 6) (primary-special 1))
+
+	(card (name "The Hive") (id 88) (type base) (cost 5)
+		(color green) (defense 5) (primary-combat 3) (ally-draw 1))
+
+	(card (name "Trade Escort") (id 89) (cost 5)
+		(color blue) (primary-combat 4) (primary-auth 4)
+		(ally-draw 1))
+
+	(card (name "War World") (id 90) (type outpost) (cost 5)
+		(color yellow) (defense 4) (primay-combat 3)
+		(ally-combat 4))
+
+	(card (name "Battle Blob") (id 91) (cost 6)
+		(color green) (primary-combat 8) (ally-draw 1) (scrap-combat 4))
+
+	(card (name "Battlecruiser") (id 92) (cost 6)
+		(color yellow) (primary-combat 5) (primay-draw 1)
+		(ally-discard 1) (scrap-draw 1) (scrap-destroy 1))
+
+	(card (name "Blob Carrier") (id 93) (cost 6)
+		(color green) (primary-combat 7) (ally-special 1))
+
+	(card (name "Flagship") (id 94) (cost 6)
+		(color blue) (primary-combat 5) (primary-draw 1)
+		(ally-auth 5))
+
+	(card (name "Junkyard") (id 95) (type outpost) (cost 6)
+		(color red) (defense 5) (primary-scrap 1))
+
+	(card (name "Missle Mech") (id 96) (cost 6)
+		(color red) (primary-combat 1) (primary-destroy 1)
+		(ally-draw 1))
+
+	(card (name "Port of Call") (id 97) (type outpost) (cost 6)
+		(color blue) (defense 6) (primary-trade 3)
+		(scrap-draw 1) (scrap-destroy 1))
+
+	(card (name "Royal Redoubt") (id 98) (type outpost) (cost 6)
+		(color yellow) (defense 6) (primary-combat 3)
+		(ally-discard 1))
+
 )
 
