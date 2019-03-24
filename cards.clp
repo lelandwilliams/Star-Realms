@@ -5,7 +5,6 @@
 	(slot cost (type INTEGER) (default 0))
 	(slot type (type SYMBOL) (default ship))
 	(slot defense (type INTEGER) (default 0))
-	;(slot copy (type INTEGER) (default ?NONE))
 
 	(slot primary-auth (type INTEGER) (default 0))
 	(slot primary-combat (type INTEGER) (default 0))
@@ -24,6 +23,7 @@
 	(slot ally-discard (type INTEGER) (default 0))
 	(slot ally-draw (type INTEGER) (default 0))
 	(slot ally-scrap (type INTEGER) (default 0))
+	(slot ally-special (type INTEGER) (default 0))
 	(slot ally-trade (type INTEGER) (default 0))
 	(slot ally-traderowscrap (type INTEGER) (default 0))
 	(multislot ally-abilities)
@@ -260,14 +260,14 @@
 		(ally-draw 1))
 
 	(card (name "War World") (id 90) (type outpost) (cost 5)
-		(color yellow) (defense 4) (primay-combat 3)
+		(color yellow) (defense 4) (primary-combat 3)
 		(ally-combat 4))
 
 	(card (name "Battle Blob") (id 91) (cost 6)
 		(color green) (primary-combat 8) (ally-draw 1) (scrap-combat 4))
 
 	(card (name "Battlecruiser") (id 92) (cost 6)
-		(color yellow) (primary-combat 5) (primay-draw 1)
+		(color yellow) (primary-combat 5) (primary-draw 1)
 		(ally-discard 1) (scrap-draw 1) (scrap-destroy 1))
 
 	(card (name "Blob Carrier") (id 93) (cost 6)
@@ -292,5 +292,33 @@
 		(color yellow) (defense 6) (primary-combat 3)
 		(ally-discard 1))
 
+	(card (name "Central Office") (id 99) (type base) (cost 7)
+		(color blue) (defense 6) (primary-trade 2) (primary-special 1)
+		(ally-draw 1))
+
+	(card (name "Dreadnaught") (id 100) (cost 7)
+		(color yellow) (primary-combat 7) (primary-draw 1)
+		(scrap-combat 5))
+
+	(card (name "Machine Base") (id 101) (type outpost) (cost 7)
+		(color red) (defense 6) (primary-special 1))
+
+	(card (name "Mothership") (id 102) (cost 7)
+		(color green) (primary-combat 6) (primary-draw 1)
+		(ally-draw 1))
+
+	(card (name "Blob World") (id 103) (type base) (cost 8)
+		(color green) (defense 7) (primary-special 1))
+
+	(card (name "Brain World") (id 104) (type outpost) (cost 8)
+		(color red) (defense 6) (primary-special 1))
+
+	(card (name "Command Ship") (id 105) (cost 8)
+		(color blue) (primary-combat 5) (primary-auth 4)
+		(primary-draw 2) (ally-destroy 1))
+
+	(card (name "Fleet HQ") (id 106) (type base) (cost 8)
+		(color yellow) (defense 8) (primary-special 1))
 )
+
 
