@@ -1,6 +1,7 @@
 (deftemplate player
 	(slot name (type STRING))
 	(slot playertype (type SYMBOL))
+	(slot authority (type INTEGER) (default 50))
 	(multislot hand)
 	(multislot discardpile)
 	(multislot drawpile)
@@ -8,11 +9,11 @@
 	)
 
 (deftemplate turn
-	(slot player (type STRING))
-	(slot discard (type INTEGER))
-	(slot combat (type INTEGER))
-	(slot scrap (type INTEGER))
-	(slot trade (type INTEGER))
+	(slot player (type STRING) (default ?NONE))
+	(slot discard (type INTEGER) (default 0))
+	(slot combat (type INTEGER) (default 0))
+	(slot scrap (type INTEGER) (default 0))
+	(slot trade (type INTEGER) (default 0))
 	)
 
 (deftemplate deck
