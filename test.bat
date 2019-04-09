@@ -2,15 +2,6 @@
 (load templates.clp)
 (load gameloop.clp)
 
-(defrule teststartrule
-	?f <- (start)
-	?p1 <- (player (name ?n1))
-	?p2 <- (player (name ?n2&~?n1))
-	=>
-	(printout t "Startup" crlf)
-	(retract ?f)
-)
-
 (deffacts testfacts
 	(player
 		(name "PlayerOne")
@@ -25,8 +16,5 @@
 	(deck
 		(explorers 21 22 23 24 25 26 27 28 29 30)
 	)
-	(start)
 )
-
-
 		
