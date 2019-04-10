@@ -34,7 +34,7 @@
 	(modify ?t (player ?newplayer) (combat 0) (scrap 0) (trade 0))
 	(modify ?p
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
-	(assert draw (player ?player) (num 5))
+	(assert (draw (player ?player) (num 5)))
 )
 
 (defrule draw
@@ -43,7 +43,7 @@
 		(hand $?hand)
 		(drawpile $?drawpile))
 	(not (drew))
-	(test (length$ $?drawpile))
+	(test (> (length$ $?drawpile) 0))
 	=>
 	(bind ?n (random 1 (length$ $?drawpile)))
 	(bind ?drawcard (nth$ ?n $?drawpile))
@@ -61,7 +61,7 @@
 	(test (= 0 (length$ $?drawpile)))
 	=>
 	(modify ?p (discardpile) (drawpile $?discards))
-	(printout t "Player " ?player " resuffles" crlf)
+	(printout t  ?player " resuffles" crlf)
 )
 
 (defrule teststartrule
