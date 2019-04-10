@@ -6,6 +6,7 @@
 	(multislot discardpile)
 	(multislot drawpile)
 	(multislot bases)
+	(multislot cardsplayed)
 	)
 
 (deftemplate turn
