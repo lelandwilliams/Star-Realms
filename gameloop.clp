@@ -20,11 +20,21 @@
 	(not (draw))
 	?f <- (endturn)
 	?t <- (turn (player ?player))
-	(player (name ?newplayer&~?player))
+	?np <- (player 
+		(name ?newplayer&~?player))
+	?p <- (player
+		(name ?player)
+		(hand $?hand)
+		(discardpile $?discards)
+		(cardsplayed $?played)
+		)
 	=>
-	(printout t "*** End of Turn ***" crlf )
+	(printout t crlf "    *** End of Turn ***" crlf )
 	(retract ?f)
 	(modify ?t (player ?newplayer) (combat 0) (scrap 0) (trade 0))
+	(modify ?p
+		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
+	(assert draw (player ?player) (num 5))
 )
 
 (defrule draw
