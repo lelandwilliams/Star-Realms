@@ -1,14 +1,3 @@
-(deftemplate draw
-	(slot player (type STRING))
-	(slot num (type INTEGER))
-)
-
-(deftemplate anounce "This fact triggers printing of an event"
-	(slot player (type STRING))
-	(slot eventtype (type STRING))
-	(slot num (type INTEGER))
-)
-
 (defrule makeanouncement
 	?f <- (anounce (player ?p) (eventtype ?e) (num ?n))
 	(card (id ?n) (name ?cardname))

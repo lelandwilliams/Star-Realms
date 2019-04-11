@@ -1,3 +1,14 @@
+(deftemplate anounce "This fact triggers printing of an event"
+	(slot player (type STRING))
+	(slot eventtype (type STRING))
+	(slot num (type INTEGER))
+)
+
+(deftemplate draw
+	(slot player (type STRING))
+	(slot num (type INTEGER))
+)
+
 (deftemplate player
 	(slot name (type STRING))
 	(slot playertype (type SYMBOL))
