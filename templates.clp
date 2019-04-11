@@ -23,5 +23,7 @@
 	(multislot explorers)
 	)
 
+(deftemplate special "a sentinal showing the triggering of a card's special ability"
+	(slot name))
 
 
