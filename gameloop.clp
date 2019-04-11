@@ -3,16 +3,17 @@
 	(slot num (type INTEGER))
 )
 
-(deftemplate drew "This fact triggers printing"
+(deftemplate anounce "This fact triggers printing of an event"
 	(slot player (type STRING))
+	(slot eventtype (type STRING))
 	(slot num (type INTEGER))
 )
 
-(defrule announce-draw
-	?f <- (drew (player ?p) (num ?n))
+(defrule makeanouncement
+	?f <- (anounce (player ?p) (eventtype ?e) (num ?n))
 	(card (id ?n) (name ?cardname))
 	=>
-	(printout t ?p " drew " ?cardname crlf)
+	(printout t ?p " " ?e " " ?cardname crlf)
 	(retract ?f)
 )
 
@@ -42,7 +43,7 @@
 	?p <- (player (name ?player) 
 		(hand $?hand)
 		(drawpile $?drawpile))
-	(not (drew))
+	(not (announce))
 	(test (> (length$ $?drawpile) 0))
 	=>
 	(bind ?n (random 1 (length$ $?drawpile)))
@@ -52,8 +53,56 @@
 	(if (= ?num 1) 
 		then (retract ?f) 
 		else (modify ?f (num (- ?num 1))))
-	(assert (drew (player ?player) (num ?drawcard)))
+	(assert (anounce 
+		(player ?player) 
+		(num ?drawcard)
+		(eventtype "Drew")))
 )
+
+(defrule playcard "Resolves the playing of a card"
+	?f <- (play ?num)
+	(card 
+		(id ?num) 
+		(name ?cardname) 
+		(primary-auth ?auth)
+		(primary-combat ?combat)
+		(primary-destroy ?destroy)
+		(primary-discard ?discard)
+		(primary-draw ?draw)
+		(primary-scrap ?scrap)
+		(primary-trade ?trade)
+		(primary-traderowscrap ?tradescrap)
+		(primary-special ?has_special)
+		)
+	?t <- (turn 
+		(player ?playername)
+		(discard ?turn_discard)
+		(combat ?turn_combat)
+		(trade ?turn_trade)
+		)
+	?p <- (player 
+		(name ?playername)
+		(authority ?player_auth)
+		(hand $?before ?num $?after)
+		(cardsplayed $?cardsplayed)
+		)
+	=>	
+	(retract ?f)
+	(modify ?t
+		(discard (+ ?turn_discard ?discard))
+		(combat (+ ?turn_combat ?combat))
+		(trade (+ ?turn_trade ?trade))
+		)
+	(modify ?p
+		(authority (+ ?auth ?player_auth))
+		(hand $?before $?after)
+		(cardsplayed $?cardsplayed ?num)
+		)
+	(if (= 1 ?has_special) 
+		then (assert (special (name ?cardname)))
+		)
+)
+	
 
 (defrule reshuffle
 	?f <- (draw (player ?player) (num ?num))
