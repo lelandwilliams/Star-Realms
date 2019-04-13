@@ -6,9 +6,17 @@
 	(retract ?f)
 )
 
+(defrule discard
+	?t <- (turn (player ?player))
+	?p <- (player (name ?player) (discard ?d&: (> ?d 0)))
+	=> 
+	(focus DISCARD)
+	)
+
 (defrule endturn
 	(not (draw))
 	?f <- (endturn)
+	?c <- (choicelist)
 	?t <- (turn (player ?player))
 	?np <- (player 
 		(name ?newplayer&~?player))
@@ -25,6 +33,7 @@
 	(modify ?p
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
 	(assert (draw (player ?player) (num 5)))
+	(modify ?c (choices))
 )
 
 (defrule draw
@@ -65,7 +74,6 @@
 		)
 	?t <- (turn 
 		(player ?playername)
-		(discard ?turn_discard)
 		(combat ?turn_combat)
 		(trade ?turn_trade)
 		)
@@ -75,10 +83,13 @@
 		(hand $?before ?num $?after)
 		(cardsplayed $?cardsplayed)
 		)
+	?op <- (player
+		(name ~?playername)
+		(discard ?opdiscard)
+		)
 	=>	
 	(retract ?f)
 	(modify ?t
-		(discard (+ ?turn_discard ?discard))
 		(combat (+ ?turn_combat ?combat))
 		(trade (+ ?turn_trade ?trade))
 		)
@@ -87,6 +98,7 @@
 		(hand $?before $?after)
 		(cardsplayed $?cardsplayed ?num)
 		)
+	(modify ?op (discard (+ ?discard ?opdiscard)))
 	(if (= 1 ?has_special) 
 		then (assert (special (name ?cardname)))
 		)
@@ -118,4 +130,38 @@
 	(assert (draw (player ?scndplayer) (num 5)))
 	(assert (endturn))
 )
+
+(defmodule DISCARD)
+(import MAIN::?ALL)
+
+(defrule debugswitch
+	(declare (salience 100))
+	=>
+	(printout t crlf "In module DISCARD" crlf crlf)
+)
+
+(defrule gatheroptions
+	(not (choice))
+	(turn (player ?player))
+	?p <- (player (name ?player) (discardpile $?discards) (hand $? ?c $?))
+	?o <- (choicelist (choices $?choices))
+	(card (id ?c) (name ?name))
+	=>
+	(modify ?o (choices ?name $?choices) (choicetype "Discard"))
+	(assert choice (choicetype discard))
+)
+
+(defrule process_discard_choice
+	?c <- (choice (choicetype discard) (choicenum ?choice))
+	?cl <- (choicelist (choices $?choices))
+	(test (> ?choice 0))
+	(test (<= ?choice (length$ $?choices)))
+	(bind ?name (nth ?choice ?choices))
+	(card (name ?name) (id ?id))
+	(turn (player ?player))
+	?p <- (player (name ?player) 
+		(hand $?handbefore ?id $?handafter)
+		(discardpile $?discards) 
+		(discard ?dnum))
+		=>)
 
