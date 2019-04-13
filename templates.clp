@@ -16,7 +16,7 @@
 
 (deftemplate choicelist " A place to list all of a player's choices"
 	(slot choicetype)
-	(multislot choices)
+	(multislot choices (type STRING))
 )
 
 (deftemplate player
