@@ -6,15 +6,18 @@
 	(retract ?f)
 )
 
-(defrule discard
-	?t <- (turn (player ?player))
-	?p <- (player (name ?player) (discard ?d&: (> ?d 0)))
-	=> 
+(defrule discard-switch "Once end of turn upkeep is finished, switch focus"
+	(not (draw))
+	(not (anounce))
+	?f <- (discard)
+	=>
+	(retract ?f)
 	(focus DISCARD)
 	)
 
 (defrule endturn
 	(not (draw))
+	(not (anounce))
 	?f <- (endturn)
 	?c <- (choicelist)
 	?t <- (turn (player ?player))
@@ -34,6 +37,7 @@
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
 	(assert (draw (player ?player) (num 5)))
 	(modify ?c (choices))
+	(assert (discard))
 )
 
 (defrule draw
@@ -131,37 +135,4 @@
 	(assert (endturn))
 )
 
-(defmodule DISCARD)
-(import MAIN::?ALL)
-
-(defrule debugswitch
-	(declare (salience 100))
-	=>
-	(printout t crlf "In module DISCARD" crlf crlf)
-)
-
-(defrule gatheroptions
-	(not (choice))
-	(turn (player ?player))
-	?p <- (player (name ?player) (discardpile $?discards) (hand $? ?c $?))
-	?o <- (choicelist (choices $?choices))
-	(card (id ?c) (name ?name))
-	=>
-	(modify ?o (choices ?name $?choices) (choicetype "Discard"))
-	(assert choice (choicetype discard))
-)
-
-(defrule process_discard_choice
-	?c <- (choice (choicetype discard) (choicenum ?choice))
-	?cl <- (choicelist (choices $?choices))
-	(test (> ?choice 0))
-	(test (<= ?choice (length$ $?choices)))
-	(bind ?name (nth ?choice ?choices))
-	(card (name ?name) (id ?id))
-	(turn (player ?player))
-	?p <- (player (name ?player) 
-		(hand $?handbefore ?id $?handafter)
-		(discardpile $?discards) 
-		(discard ?dnum))
-		=>)
 
