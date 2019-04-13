@@ -1,7 +1,7 @@
+(defmodule MAIN (export ?ALL))
 (load cards.clp)
 (load templates.clp)
-(export ?ALL)
+(load testfacts.clp)
 (load gameloop.clp)
 (load discard.clp)
-(load testfacts.clp)
 
