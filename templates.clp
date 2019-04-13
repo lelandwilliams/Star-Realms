@@ -9,6 +9,16 @@
 	(slot num (type INTEGER))
 )
 
+(deftemplate choice 
+	(slot choicetype)
+	(slot choicenum (type INTEGER) (default -1))
+)
+
+(deftemplate choicelist " A place to list all of a player's choices"
+	(slot choicetype)
+	(multislot choices)
+)
+
 (deftemplate player
 	(slot name (type STRING))
 	(slot playertype (type SYMBOL))
@@ -38,4 +48,3 @@
 	(slot name))
 
 
-(export ?ALL)
