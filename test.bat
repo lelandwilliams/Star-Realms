@@ -4,4 +4,8 @@
 (load testfacts.clp)
 (load gameloop.clp)
 (load discard.clp)
+(watch focus)
+;(watch rules)
+(reset)
+(run)
 
