@@ -9,11 +9,6 @@
 	(slot num (type INTEGER))
 )
 
-(deftemplate choice 
-	(slot choicetype)
-	(slot choicenum (type INTEGER) (default -1))
-)
-
 (deftemplate choicelist " A place to list all of a player's choices"
 	(slot choicetype)
 	(multislot choices (type STRING))
