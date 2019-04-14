@@ -19,7 +19,7 @@
 	(not (draw))
 	(not (anounce))
 	?f <- (endturn)
-	?c <- (choicelist)
+	;?c <- (choicelist)
 	?t <- (turn (player ?player))
 	?np <- (player 
 		(name ?newplayer&~?player))
@@ -36,7 +36,7 @@
 	(modify ?p
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
 	(assert (draw (player ?player) (num 5)))
-	(modify ?c (choices))
+	;(modify ?c (choices))
 	(assert (discard))
 )
 
@@ -126,9 +126,15 @@
 	(printout t "Startup" crlf)
 	(retract ?f)
 	(if (= (random 1 2) 1)
-		then (bind ?startplayer ?n1) (bind ?scndplayer ?n2)
-		else (bind ?startplayer ?n2) (bind ?scndplayer ?n1))
+		then 
+			(bind ?startplayer ?n1) 
+			(bind ?scndplayer ?n2)
+		else 
+			(bind ?startplayer ?n2) 
+			(bind ?scndplayer ?n1))
 	(assert (turn (player ?startplayer)))
+	(modify ?p1 (discard 1))
+	(modify ?p2 (discard 1))
 	(printout t "Player " ?startplayer " will begin" crlf)
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
