@@ -3,7 +3,7 @@
 	(slot id (type INTEGER) (default ?NONE))
 	(slot color (type SYMBOL) (default none))
 	(slot cost (type INTEGER) (default 0))
-	(slot type (type SYMBOL) (default ship))
+	(slot cardtype (type SYMBOL) (default ship))
 	(slot defense (type INTEGER) (default 0))
 
 	(slot primary-auth (type INTEGER) (default 0))
@@ -142,18 +142,18 @@
 	(card (name "Trade Pod") (id 53) (color green) (cost 2)
 		(primary-trade 3) (ally-combat 2))
 	
-	(card (name "Battle Station") (id 54) (type outpost) (cost 3)
+	(card (name "Battle Station") (id 54) (cardtype outpost) (cost 3)
 		(color red) (defense 5) (scrap-combat 5))
-	(card (name "Battle Station") (id 55) (type outpost) (cost 3)
+	(card (name "Battle Station") (id 55) (cardtype outpost) (cost 3)
 		(color red) (defense 5) (scrap-combat 5))
 
-	(card (name "Blob Wheel") (id 56) (type base) (cost 3)
+	(card (name "Blob Wheel") (id 56) (cardtype base) (cost 3)
 		(color green) (defense 5) (primary-combat 1)
 		(scrap-trade 3))
-	(card (name "Blob Wheel") (id 57) (type base) (cost 3)
+	(card (name "Blob Wheel") (id 57) (cardtype base) (cost 3)
 		(color green) (defense 5) (primary-combat 1)
 		(scrap-trade 3))
-	(card (name "Blob Wheel") (id 58) (type base) (cost 3)
+	(card (name "Blob Wheel") (id 58) (cardtype base) (cost 3)
 		(color green) (defense 5) (primary-combat 1)
 		(scrap-trade 3))
 
@@ -202,14 +202,14 @@
 		(color yellow) (primary-trade 1) (primary-draw 1)
 		(scrap-discard 1))
 
-	(card (name "Trading Post") (id 70) (type outpost) (cost 3)
+	(card (name "Trading Post") (id 70) (cardtype outpost) (cost 3)
 		(defense 4) (color blue) (primary-special 1) (scrap-combat 3))
-	(card (name "Trading Post") (id 71) (type outpost) (cost 3)
+	(card (name "Trading Post") (id 71) (cardtype outpost) (cost 3)
 		(defense 4) (color blue) (primary-special 1) (scrap-combat 3))
 
-	(card (name "Barter World") (id 72) (type base) (cost 4)
+	(card (name "Barter World") (id 72) (cardtype base) (cost 4)
 		(defense 4) (color blue) (primary-special 1) (scrap-combat 5))
-	(card (name "Barter World") (id 73) (type base) (cost 4)
+	(card (name "Barter World") (id 73) (cardtype base) (cost 4)
 		(defense 4) (color blue) (primary-special 1) (scrap-combat 5))
 
 	(card (name "Blob Destroyer") (id 74) (cost 4)
@@ -227,15 +227,15 @@
 	(card (name "Patrol Mech") (id 79) (cost 4)
 		(color red) (primary-special 1) (ally-scrap 1))
 
-	(card (name "Recycling Station") (id 80) (cost 4) (type outpost)
+	(card (name "Recycling Station") (id 80) (cost 4) (cardtype outpost)
 		(defense 4) (color yellow) (primary-special 1)) 
-	(card (name "Recycling Station") (id 81) (cost 4) (type outpost)
+	(card (name "Recycling Station") (id 81) (cost 4) (cardtype outpost)
 		(defense 4) (color yellow) (primary-special 1)) 
 
-	(card (name "Space Station") (id 82) (cost 4) (type outpost)
+	(card (name "Space Station") (id 82) (cost 4) (cardtype outpost)
 		(defense 4) (color yellow) (primary-combat 2)
 		(ally-combat 2) (scrap-trade 4))
-	(card (name "Space Station") (id 83) (cost 4) (type outpost)
+	(card (name "Space Station") (id 83) (cost 4) (cardtype outpost)
 		(defense 4) (color yellow) (primary-combat 2)
 		(ally-combat 2) (scrap-trade 4))
 
@@ -246,20 +246,20 @@
 		(color red) (primary-combat 4) (primary-scrap 1)
 		(ally-draw 1))
 
-	(card (name "Defense Center") (id 86) (type outpost) (cost 5)
+	(card (name "Defense Center") (id 86) (cardtype outpost) (cost 5)
 		(color blue) (primary-special 1) (ally-combat 2))
 
-	(card (name "Mech World") (id 87) (type outpost) (cost 5)
+	(card (name "Mech World") (id 87) (cardtype outpost) (cost 5)
 		(color red) (defense 6) (primary-special 1))
 
-	(card (name "The Hive") (id 88) (type base) (cost 5)
+	(card (name "The Hive") (id 88) (cardtype base) (cost 5)
 		(color green) (defense 5) (primary-combat 3) (ally-draw 1))
 
 	(card (name "Trade Escort") (id 89) (cost 5)
 		(color blue) (primary-combat 4) (primary-auth 4)
 		(ally-draw 1))
 
-	(card (name "War World") (id 90) (type outpost) (cost 5)
+	(card (name "War World") (id 90) (cardtype outpost) (cost 5)
 		(color yellow) (defense 4) (primary-combat 3)
 		(ally-combat 4))
 
@@ -277,22 +277,22 @@
 		(color blue) (primary-combat 5) (primary-draw 1)
 		(ally-auth 5))
 
-	(card (name "Junkyard") (id 95) (type outpost) (cost 6)
+	(card (name "Junkyard") (id 95) (cardtype outpost) (cost 6)
 		(color red) (defense 5) (primary-scrap 1))
 
 	(card (name "Missle Mech") (id 96) (cost 6)
 		(color red) (primary-combat 1) (primary-destroy 1)
 		(ally-draw 1))
 
-	(card (name "Port of Call") (id 97) (type outpost) (cost 6)
+	(card (name "Port of Call") (id 97) (cardtype outpost) (cost 6)
 		(color blue) (defense 6) (primary-trade 3)
 		(scrap-draw 1) (scrap-destroy 1))
 
-	(card (name "Royal Redoubt") (id 98) (type outpost) (cost 6)
+	(card (name "Royal Redoubt") (id 98) (cardtype outpost) (cost 6)
 		(color yellow) (defense 6) (primary-combat 3)
 		(ally-discard 1))
 
-	(card (name "Central Office") (id 99) (type base) (cost 7)
+	(card (name "Central Office") (id 99) (cardtype base) (cost 7)
 		(color blue) (defense 6) (primary-trade 2) (primary-special 1)
 		(ally-draw 1))
 
@@ -300,24 +300,24 @@
 		(color yellow) (primary-combat 7) (primary-draw 1)
 		(scrap-combat 5))
 
-	(card (name "Machine Base") (id 101) (type outpost) (cost 7)
+	(card (name "Machine Base") (id 101) (cardtype outpost) (cost 7)
 		(color red) (defense 6) (primary-special 1))
 
 	(card (name "Mothership") (id 102) (cost 7)
 		(color green) (primary-combat 6) (primary-draw 1)
 		(ally-draw 1))
 
-	(card (name "Blob World") (id 103) (type base) (cost 8)
+	(card (name "Blob World") (id 103) (cardtype base) (cost 8)
 		(color green) (defense 7) (primary-special 1))
 
-	(card (name "Brain World") (id 104) (type outpost) (cost 8)
+	(card (name "Brain World") (id 104) (cardtype outpost) (cost 8)
 		(color red) (defense 6) (primary-special 1))
 
 	(card (name "Command Ship") (id 105) (cost 8)
 		(color blue) (primary-combat 5) (primary-auth 4)
 		(primary-draw 2) (ally-destroy 1))
 
-	(card (name "Fleet HQ") (id 106) (type base) (cost 8)
+	(card (name "Fleet HQ") (id 106) (cardtype base) (cost 8)
 		(color yellow) (defense 8) (primary-special 1))
 )
 
