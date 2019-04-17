@@ -133,12 +133,10 @@
 			(bind ?startplayer ?n2) 
 			(bind ?scndplayer ?n1))
 	(assert (turn (player ?startplayer)))
-	(modify ?p1 (discard 1))
+	(modify ?p1 (discard 2))
 	(modify ?p2 (discard 1))
 	(printout t "Player " ?startplayer " will begin" crlf)
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
 	(assert (endturn))
 )
-
-
