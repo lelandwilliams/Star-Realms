@@ -13,7 +13,7 @@
 		(discard ?d)
 		(playertype ?ptype))
 	=>
-	(printout t crlf "In module DISCARD")
+	;(printout t crlf "In module DISCARD")
 	(if (neq 0 ?d) then
 		(printout t crlf ?player " must choose a card to discard" crlf)
 		; the next statement should be replaced by a focus shift eventually
@@ -30,7 +30,7 @@
 	?p <- (player (name ?player) (hand $?before ?c $?after) (playertype HUMAN))
 	(card (id ?c) (name ?name))
 	=>
-	(printout t "In gatheroptions" crlf)
+	;(printout t "In gatheroptions" crlf)
 	(assert (choices (choicenum ?next) (cardname ?name)))
 	(retract ?nc)
 	(bind ?next (+ 1 ?next))
