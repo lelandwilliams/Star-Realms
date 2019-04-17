@@ -24,10 +24,10 @@
 	(printout t crlf)
 	)
 
-(defrule gatheroptions
+(defrule gatheroptions "Get the Name of a card id in HUMAN player's hand and assert choices fact containing it"
 	(turn (player ?player))
 	?nc <- (nextchoice ?next)
-	?p <- (player (name ?player) (hand $?before ?c $?after))
+	?p <- (player (name ?player) (hand $?before ?c $?after) (playertype HUMAN))
 	(card (id ?c) (name ?name))
 	=>
 	(printout t "In gatheroptions" crlf)
@@ -62,7 +62,7 @@
 )
 
 (defrule process_discard "Do the bookkeeping corrisponding to a discard"
-	(not (choices))
+;	(not (choices))
 	?dc <- (discard ?name)
 	(card (name ?name) (id ?id))
 	?p <- (player (name ?player) 
@@ -70,7 +70,7 @@
 		(hand $?before ?c $?after)
 		(discard ?d&: (> ?d 0)))
 	=>
-	(assert (anounce (player ?player) (eventtype "Discarded") (num ?id)))
+	(assert (anounce (player ?player) (eventtype "discarded") (num ?id)))
 	(retract ?dc)
 	(modify ?p 
 		(hand $?before $?after) 
@@ -84,8 +84,8 @@
 	(turn (player ?player)) 
 	?p <- (player 
 		(name ?player) 
-		(hand $?hand))
-		;(playertype HUMAN) 
+		(hand $?hand)
+		(playertype HUMAN))
 		;(discard ?d&: (> ?d 0)))
 	(test (or (< ?choice 1) (> ?choice (length$ $?hand))))
 	=>
@@ -116,4 +116,23 @@
 	(assert (choice (read)))
 	)
 	
+; **************************************************
+; *    Rules for RANDOM players
+; **************************************************
 	
+(defrule random-discard "discard routine for RANDOM player"
+	(turn (player ?player)) 
+	?p <- (player 
+		(name ?player) 
+		(hand $?hand)
+		(playertype RANDOM) 
+		(discard ?d&:(> ?d 0))
+		(discardpile $?pile))
+	=>
+	(printout t crlf ?player " must randomly choose a card to discard" crlf)
+	(bind ?idx (random 1 (length$ $?hand)))
+	(bind ?choice (nth$ ?idx $?hand))
+	(assert (anounce (player ?player) (eventtype "discarded") (num ?choice)))
+	(modify ?p (discard (- ?d 1)) (hand (delete$ $?hand ?idx ?idx)))
+	)
+
