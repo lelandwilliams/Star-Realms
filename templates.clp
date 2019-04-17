@@ -10,9 +10,13 @@
 )
 
 (deftemplate choicelist " A place to list all of a player's choices"
-	(slot choicetype)
+	;(slot choicetype)
 	(multislot choices (type STRING))
+	(multislot choicetype (type STRING))
+	(multislot card_ids (type INTEGER))
 )
+
+(deftemplate endturn "a sentinal that a player has chosen to end their turn")
 
 (deftemplate player
 	(slot name (type STRING))
