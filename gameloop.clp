@@ -6,6 +6,15 @@
 	(retract ?f)
 )
 
+(defrule choice-switch "after discard, switch focus to player choices"
+	(not (draw))
+	(not (anounce))
+	(not (discard))
+	(not (endturn))
+	=>
+	(focus PLAYERCHOICE)
+	)
+
 (defrule discard-switch "Once end of turn upkeep is finished, switch focus"
 	(not (draw))
 	(not (anounce))
@@ -109,7 +118,7 @@
 )
 	
 
-(defrule reshuffle
+(defrule reshuffle-player-deck "Reshuffles a player's discard pile into their hand"
 	?f <- (draw (player ?player) (num ?num))
 	?p <- (player (name ?player) (discardpile $?discards) (drawpile $?drawpile))
 	(test (= 0 (length$ $?drawpile)))
