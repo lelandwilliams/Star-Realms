@@ -4,8 +4,9 @@
 (load testfacts.clp)
 (load gameloop.clp)
 (load discard.clp)
+(load playerchoice.clp)
 (watch focus)
 ;(watch rules)
-(reset)
-(run)
+;(reset)
+;(run)
 
