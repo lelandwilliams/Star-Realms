@@ -6,7 +6,7 @@
 	)
 	(player
 		(name "PlayerTwo")
-		(playertype HUMAN)
+		(playertype RANDOM)
 		(drawpile 11 12 13 14 15 16 17 18 19 20)
 	)
 	(deck
