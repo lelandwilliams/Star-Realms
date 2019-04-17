@@ -63,11 +63,12 @@
 
 (defrule process_discard "Do the bookkeeping corrisponding to a discard"
 ;	(not (choices))
+	(turn (player ?player))
 	?dc <- (discard ?name)
 	(card (name ?name) (id ?id))
 	?p <- (player (name ?player) 
 		(discardpile $?discards) 
-		(hand $?before ?c $?after)
+		(hand $?before ?id $?after)
 		(discard ?d&: (> ?d 0)))
 	=>
 	(assert (anounce (player ?player) (eventtype "discarded") (num ?id)))
