@@ -134,9 +134,13 @@
 	?f <- (initial-fact)
 	?p1 <- (player (name ?n1))
 	?p2 <- (player (name ?n2&~?n1))
+	?d <- (deck (facedown-cards $?facedown) (faceup-cards $?faceup))
 	=>
 	(printout t "Startup" crlf)
 	(retract ?f)
+	(bind $?facedown 31)
+	(loop-for-count (?i 32 106) do (bind $?facedown $?facedown ?i))
+	(modify ?d (facedown-cards $?facedown))
 	(if (= (random 1 2) 1)
 		then 
 			(bind ?startplayer ?n1) 
@@ -147,8 +151,21 @@
 	(assert (turn (player ?startplayer)))
 	(modify ?p1 (discard 2))
 	(modify ?p2 (discard 1))
-	(printout t "Player " ?startplayer " will begin" crlf)
+	(printout t ?startplayer " will begin" crlf)
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
-	(assert (endturn))
+	;(assert (endturn))
+)
+
+(defrule update-tradepile
+	?d <- (deck (facedown-cards $?facedown) (faceup-cards $?faceup))
+	(test (< (length$ $?faceup) 5))
+	(test (> (length$ $?facedown) 0))
+	=>
+	(bind ?index (random 1 (length$ $?facedown)))
+	(bind ?id (nth$ ?index $?facedown))
+	(modify ?d 
+		(facedown-cards (delete-member$ $?facedown ?id))
+		(faceup-cards $?faceup ?id))
+	(assert (anounce (player "Trade Row") (eventtype "Adds") (num ?id)))
 )
