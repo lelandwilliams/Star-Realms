@@ -13,7 +13,7 @@
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
 	=>
 	(modify ?cl (choices ?choices ?combat) (choicetype "Combat"))
-	)
+)
 
 (defrule addcardchoice "Add playing a card to list of choices"
 	(turn (player ?player))
@@ -53,6 +53,30 @@
 	(assert (prompt -1))
 )
 
+(defrule resolvechoice "process a valid choice into a update directive"
+	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
+	?f <- (prompt ?n)
+	(test (> ?n 0))
+	(test (<= ?n (length$ ?choices)))
+	(turn (player ?player))
+	(player (name ?player) (hand $?hand))
+	=>
+	(assert (finalchoice 
+		(choice (nth$ ?n $?choices))
+		(choicetype (nth$ ?n $?choicetypes))))
+	(retract ?f ?cl)
+)
+
+(defrule resolve-cardplay "process the choice to play a card"
+	(turn (player ?player))
+	?fc <- (finalchoice (choice ?cardname) (choicetype "Play"))
+	?p <- (player (name ?player) (hand $? ?id $?))
+	(card (name ?cardname) (id ?id) (cardtype ship))
+	=>
+	(retract ?fc)
+	(assert (play (id ?id)))
+)
+
 (defrule prompthuman
 	(turn (player ?player))
 	(player (name ?player) (playertype HUMAN))
@@ -64,5 +88,6 @@
 	(printout t "Choice ->")
 	(assert (prompt (read)))
 )
+
 
 
