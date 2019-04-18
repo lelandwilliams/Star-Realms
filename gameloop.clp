@@ -6,22 +6,11 @@
 	(retract ?f)
 )
 
-;(defrule choice-switch "after discard, switch focus to player choices"
-;	(not (draw))
-;	(not (anounce))
-;	(not (discard))
-;	(not (endturn))
-;	=>
-;	(assert (playerchoice))
-;)
-
 (defrule choice-switch-new
+	(playerchoice)
 	(not (draw))
 	(not (anounce))
 	(not (discard))
-	(not (endturn))
-	(not (play))
-	(playerchoice)
 	=>
 	(focus PLAYERCHOICE)
 )
@@ -39,7 +28,6 @@
 	(not (draw))
 	(not (anounce))
 	?f <- (endturn)
-	;?c <- (choicelist)
 	?t <- (turn (player ?player))
 	?np <- (player 
 		(name ?newplayer&~?player))
@@ -56,7 +44,6 @@
 	(modify ?p
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
 	(assert (draw (player ?player) (num 5)))
-	;(modify ?c (choices))
 	(assert (discard))
 )
 
@@ -112,6 +99,7 @@
 		(discard ?opdiscard)
 		)
 	=>	
+	(assert (playerchoice))
 	(assert (anounce 
 		(player ?playername) 
 		(num ?num)
