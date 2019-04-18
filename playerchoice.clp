@@ -3,7 +3,9 @@
 
 (defrule onswitch "Do this upon switching"
 	(declare (salience 100))
+	?f <- (playerchoice)
 	=>
+	(retract ?f)
 	(printout t "In Module PLAYERCHOICE" crlf)
 	(assert (choicelist (choices) (choicetype) (card_ids)))
 )
@@ -75,6 +77,14 @@
 	=>
 	(retract ?fc)
 	(assert (play (id ?id)))
+	(assert (playerchoice))
+)
+
+(defrule resolve-endturn "process the choice to end the turn"
+	?fc <- (finalchoice (choice ?cardname) (choicetype "End Turn"))
+	=>
+	(retract ?fc)
+	(assert (endturn))
 )
 
 (defrule prompthuman
@@ -87,6 +97,17 @@
 	(retract ?f)
 	(printout t "Choice ->")
 	(assert (prompt (read)))
+)
+
+(defrule promptrandomplayer
+	(turn (player ?player))
+	(player (name ?player) (playertype RANDOM))
+	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
+	?f <- (prompt ?val)
+	(test (or (< ?val 0) (> ?val (length$ $?choices))))
+	=>
+	(retract ?f)
+	(assert (prompt (random 0 (length$ $?choices))))
 )
 
 
