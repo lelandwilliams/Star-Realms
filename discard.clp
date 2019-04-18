@@ -15,13 +15,14 @@
 	=>
 	;(printout t crlf "In module DISCARD")
 	(if (neq 0 ?d) then
-		(printout t crlf ?player " must choose a card to discard" crlf)
+		;(printout t crlf ?player " must choose a card to discard" crlf)
 		; the next statement should be replaced by a focus shift eventually
 		(if (eq ?ptype HUMAN) then (assert (nextchoice 1)))
 	else
 		(printout t " - no discard necessary" crlf)
 	)
-	(printout t crlf)
+;	(printout t crlf)
+	(assert (playerchoice))
 	)
 
 (defrule gatheroptions "Get the Name of a card id in HUMAN player's hand and assert choices fact containing it"
