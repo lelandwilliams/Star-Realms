@@ -11,8 +11,9 @@
 )
 
 (defrule addcombatchoice "Add blowing things up to list of choices"
-	(turn (player ?player) (combat ?combat&:(> ?combat 0)))
+	(turn (combat ?combat&:(> ?combat 0)))
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
+	(test (not (member$ "Combat" $?choicetypes)))
 	=>
 	(modify ?cl (choices ?choices ?combat) (choicetype "Combat"))
 )
