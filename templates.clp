@@ -39,6 +39,8 @@
 	(multislot cardsplayed)
 	)
 
+(deftemplate playerchoice "a sentinal to switch to module PLAYERCHOICE")
+
 (deftemplate turn
 	(slot player (type STRING) (default ?NONE))
 	(slot combat (type INTEGER) (default 0))
