@@ -6,14 +6,14 @@
 	(retract ?f)
 )
 
-(defrule choice-switch "after discard, switch focus to player choices"
-	(not (draw))
-	(not (anounce))
-	(not (discard))
-	(not (endturn))
-	=>
-	(assert (playerchoice))
-)
+;(defrule choice-switch "after discard, switch focus to player choices"
+;	(not (draw))
+;	(not (anounce))
+;	(not (discard))
+;	(not (endturn))
+;	=>
+;	(assert (playerchoice))
+;)
 
 (defrule choice-switch-new
 	(not (draw))
@@ -21,9 +21,8 @@
 	(not (discard))
 	(not (endturn))
 	(not (play))
-	?f <- (playerchoice)
+	(playerchoice)
 	=>
-	(retract ?f)
 	(focus PLAYERCHOICE)
 )
 
