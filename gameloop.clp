@@ -12,8 +12,20 @@
 	(not (discard))
 	(not (endturn))
 	=>
+	(assert (playerchoice))
+)
+
+(defrule choice-switch-new
+	(not (draw))
+	(not (anounce))
+	(not (discard))
+	(not (endturn))
+	(not (play))
+	?f <- (playerchoice)
+	=>
+	(retract ?f)
 	(focus PLAYERCHOICE)
-	)
+)
 
 (defrule discard-switch "Once end of turn upkeep is finished, switch focus"
 	(not (draw))
@@ -71,7 +83,7 @@
 )
 
 (defrule playcard "Resolves the playing of a card"
-	?f <- (play ?num)
+	?f <- (play (id ?num))
 	(card 
 		(id ?num) 
 		(name ?cardname) 
@@ -101,6 +113,10 @@
 		(discard ?opdiscard)
 		)
 	=>	
+	(assert (anounce 
+		(player ?playername) 
+		(num ?num)
+		(eventtype "Played")))
 	(retract ?f)
 	(modify ?t
 		(combat (+ ?turn_combat ?combat))
