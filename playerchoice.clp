@@ -66,18 +66,19 @@
 	(assert (finalchoice 
 		(choice (nth$ ?n $?choices))
 		(choicetype (nth$ ?n $?choicetypes))))
-	(retract ?f ?cl)
+	(retract ?f)
+	(retract ?cl)
 )
 
 (defrule resolve-cardplay "process the choice to play a card"
 	(turn (player ?player))
 	?fc <- (finalchoice (choice ?cardname) (choicetype "Play"))
 	?p <- (player (name ?player) (hand $? ?id $?))
-	(card (name ?cardname) (id ?id) (cardtype ship))
+	(card (name ?cardname) (id ?id))
 	=>
 	(retract ?fc)
 	(assert (play (id ?id)))
-	(assert (playerchoice))
+	;(assert (playerchoice))
 )
 
 (defrule resolve-endturn "process the choice to end the turn"
@@ -95,7 +96,7 @@
 	(test (or (< ?val 0) (> ?val (length$ $?choices))))
 	=>
 	(retract ?f)
-	(printout t "Choice ->")
+	(printout t "Choice -> ")
 	(assert (prompt (read)))
 )
 
@@ -104,7 +105,7 @@
 	(player (name ?player) (playertype RANDOM))
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
 	?f <- (prompt ?val)
-	(test (or (< ?val 0) (> ?val (length$ $?choices))))
+	(test (or (< ?val 1) (> ?val (length$ $?choices))))
 	=>
 	(retract ?f)
 	(assert (prompt (random 0 (length$ $?choices))))
