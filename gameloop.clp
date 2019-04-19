@@ -167,5 +167,5 @@
 	(modify ?d 
 		(facedown-cards (delete-member$ $?facedown ?id))
 		(faceup-cards $?faceup ?id))
-	(assert (anounce (player "Trade Row") (eventtype "Adds") (num ?id)))
+;(assert (anounce (player "Trade Row") (eventtype "Adds") (num ?id)))
 )
