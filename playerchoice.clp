@@ -18,6 +18,39 @@
 	(modify ?cl (choices ?choices ?combat) (choicetype "Combat"))
 )
 
+(defrule addbuychoice "Add the choice of buying a card"
+	(turn (trade ?trade&:(> ?trade 0)))
+	(deck (faceup-cards $? ?id $?))
+	(card (id ?id) (name ?cardname) (cost ?cost:&(<= ?cost ?trade)))
+	?cl <- (choicelist 
+		(choices $?choices) 
+		(choicetype $?choicetypes)
+		(card_ids $?cardids))
+	(test (not (member$ ?id $?cardids)))
+	=>
+	(modify ?cl 
+		(choices $?choices ?cardname) 
+		(choicetype $?choicetypes "Buy")
+		(card_ids $?cardids ?id))
+)
+
+(defrule addexplorerchoice "Add the choice of buying an explorer"
+	(turn (trade ?trade&:(> ?trade 0)))
+	(deck (explorers ?id $?))
+	(card (id ?id) (name ?cardname) (cost ?cost:&(<= ?cost ?trade)))
+	?cl <- (choicelist 
+		(choices $?choices) 
+		(choicetype $?choicetypes)
+		(card_ids $?cardids))
+	(test (not (member$ ?id $?cardids)))
+	=>
+	(modify ?cl 
+		(choices $?choices ?cardname) 
+		(choicetype $?choicetypes "Buy")
+		(card_ids $?cardids ?id))
+)
+
+
 (defrule addcardchoice "Add playing a card to list of choices"
 	(turn (player ?player))
 	(player (name ?player) (hand $? ?id $?))
