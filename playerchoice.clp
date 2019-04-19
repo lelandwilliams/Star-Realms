@@ -6,7 +6,8 @@
 	?f <- (playerchoice)
 	=>
 	(retract ?f)
-	(printout t "In Module PLAYERCHOICE" crlf)
+	;(printout t "In Module PLAYERCHOICE" crlf)
+	(printout t crlf)
 	(assert (choicelist (choices) (choicetype) (card_ids)))
 )
 
@@ -102,6 +103,38 @@
 		(choicetype (nth$ ?n $?choicetypes))))
 	(retract ?f)
 	(retract ?cl)
+)
+
+(defrule resolve-buy "process the choice to buy a card"
+	?t <- (turn (player ?player) (trade ?trade))
+	?fc <- (finalchoice (choice ?cardname) (choicetype "Buy"))
+	?p <- (player (name ?player) (discardpile $?discards))
+	(card (name ?cardname) (id ?id) (cost ?cost))
+	?d <- (deck (faceup-cards $?before ?id $?after))
+	(test (<= ?cost ?trade))
+	=>
+	(retract ?fc)
+	(modify ?t (trade (- ?trade ?cost)))
+	(modify ?p (discardpile ?id $?discards))
+	(modify ?d (faceup-cards $?before $?after))
+	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
+	(assert (playerchoice))
+)
+
+(defrule resolve-buy-explorer "process the choice to buy an explorer"
+	?t <- (turn (player ?player) (trade ?trade))
+	?fc <- (finalchoice (choice ?cardname) (choicetype "Buy"))
+	?p <- (player (name ?player) (discardpile $?discards))
+	(card (name ?cardname) (id ?id) (cost ?cost))
+	?d <- (deck (explorers ?id $?rest))
+	(test (<= ?cost ?trade))
+	=>
+	(retract ?fc)
+	(modify ?t (trade (- ?trade ?cost)))
+	(modify ?p (discardpile ?id $?discards))
+	(modify ?d (explorers $?rest))
+	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
+	(assert (playerchoice))
 )
 
 (defrule resolve-cardplay "process the choice to play a card"
