@@ -21,7 +21,7 @@
 (defrule addbuychoice "Add the choice of buying a card"
 	(turn (trade ?trade&:(> ?trade 0)))
 	(deck (faceup-cards $? ?id $?))
-	(card (id ?id) (name ?cardname) (cost ?cost:&(<= ?cost ?trade)))
+	(card (id ?id) (name ?cardname) (cost ?cost&:(<= ?cost ?trade)))
 	?cl <- (choicelist 
 		(choices $?choices) 
 		(choicetype $?choicetypes)
@@ -37,7 +37,7 @@
 (defrule addexplorerchoice "Add the choice of buying an explorer"
 	(turn (trade ?trade&:(> ?trade 0)))
 	(deck (explorers ?id $?))
-	(card (id ?id) (name ?cardname) (cost ?cost:&(<= ?cost ?trade)))
+	(card (id ?id) (name ?cardname) (cost ?cost&:(<= ?cost ?trade)))
 	?cl <- (choicelist 
 		(choices $?choices) 
 		(choicetype $?choicetypes)
