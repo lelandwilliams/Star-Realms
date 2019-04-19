@@ -154,7 +154,7 @@
 	(printout t ?startplayer " will begin" crlf)
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
-	;(assert (endturn))
+	(assert (playerchoice))
 )
 
 (defrule update-tradepile
