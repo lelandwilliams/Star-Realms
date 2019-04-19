@@ -62,10 +62,10 @@
 	(if (= ?num 1) 
 		then (retract ?f) 
 		else (modify ?f (num (- ?num 1))))
-	(assert (anounce 
-		(player ?player) 
-		(num ?drawcard)
-		(eventtype "Drew")))
+;	(assert (anounce 
+;		(player ?player) 
+;		(num ?drawcard)
+;		(eventtype "drew")))
 )
 
 (defrule playcard "Resolves the playing of a card"
