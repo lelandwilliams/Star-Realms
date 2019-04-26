@@ -94,6 +94,7 @@
 ; **************************************************
 	
 (defrule random-discard "discard routine for RANDOM player"
+	?c <- (choice ?choice)
 	(turn (player ?player)) 
 	?p <- (player 
 		(name ?player) 
@@ -102,6 +103,7 @@
 		(discard ?d&:(> ?d 0))
 		(discardpile $?pile))
 	=>
+	(retract ?c)
 	(printout t crlf ?player " must randomly choose a card to discard" crlf)
 	(bind ?idx (random 1 (length$ $?hand)))
 	(bind ?choice (nth$ ?idx $?hand))
