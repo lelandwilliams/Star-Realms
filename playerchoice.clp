@@ -11,13 +11,30 @@
 	(assert (choicelist (choices) (choicetype) (card_ids)))
 )
 
-(defrule addcombatchoice "Add blowing things up to list of choices"
-	(turn (combat ?combat&:(> ?combat 0)))
+(defrule addcombatchoice "Add hurting things up to list of choices"
+	(turn (player ?curplayer) (combat ?combat&:(> ?combat 0)))
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
+	(player (name ?pname) (outposts $?outposts))
 	(test (not (member$ "Combat" $?choicetypes)))
+	(test (not (eq ?curplayer ?pname)))
+	(test (eq 0 (length$ $?outposts)))
 	=>
 	(modify ?cl (choices ?choices ?combat) (choicetype "Combat"))
 )
+
+
+(defrule addcombatchoice "Add destroying an outpost to list of choices"
+	(turn (player ?curplayer) (combat ?combat&:(> ?combat 0)))
+	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
+	(player (name ?pname) (outposts $? ?id $?))
+	(card (id ?id) (defense ?defense))
+	(test (not (member$ "Combat" $?choicetypes)))
+	(test (not (eq ?curplayer ?pname)))
+	(test (<= ?defense ?combat))
+	=>
+	(modify ?cl (choices ?choices ?combat) (choicetype "Combat"))
+)
+
 
 (defrule addbuychoice "Add the choice of buying a card"
 	(turn (trade ?trade&:(> ?trade 0)))
@@ -118,7 +135,7 @@
 	(modify ?p (discardpile ?id $?discards))
 	(modify ?d (faceup-cards $?before $?after))
 	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
-	(assert (playerchoice))
+	;(assert (playerchoice))
 )
 
 (defrule resolve-buy-explorer "process the choice to buy an explorer"
@@ -134,7 +151,7 @@
 	(modify ?p (discardpile ?id $?discards))
 	(modify ?d (explorers $?rest))
 	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
-	(assert (playerchoice))
+	;(assert (playerchoice))
 )
 
 (defrule resolve-cardplay "process the choice to play a card"
