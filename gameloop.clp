@@ -6,14 +6,44 @@
 	(retract ?f)
 )
 
-(defrule choice-switch-new
+(defrule focus-gamestatus "switch focus to GAMESTATUS module"
+	(gamestatus)
+	(not (draw))
+	(not (anounce))
+	(deck (faceup-cards $?faceup))
+	(test (= 5 (length$ $?faceup)))
+	=>
+	(focus GAMESTATUS)
+	)
+
+(defrule focus-playerchoice
 	(playerchoice)
 	(not (draw))
 	(not (anounce))
 	(not (discard))
+	(not (endturn))
+	(not (play))
+	(not (gamestatus))
+	(turn (player ?player))
+	(player
+		(name ?player)
+		(hand $?hand)
+		(discardpile $?discards)
+		(cardsplayed $?played)
+		)
 	=>
+	;(retract ?f)
 	(focus PLAYERCHOICE)
 )
+
+(defrule prompt-playerchoice
+	(not (endturn))
+	(not (playerchoice))
+	(deck (faceup-cards $?faceup))
+	(test (= 5 (length$ $?faceup)))
+	=>
+	(assert (playerchoice))
+	)
 
 (defrule discard-switch "Once end of turn upkeep is finished, switch focus"
 	(not (draw))
@@ -44,6 +74,7 @@
 	(modify ?p
 		(hand) (cardsplayed) (discardpile $?hand $?played $?discards))
 	(assert (draw (player ?player) (num 5)))
+	(assert (gamestatus))
 	(assert (discard))
 )
 
@@ -92,6 +123,7 @@
 		(name ?playername)
 		(authority ?player_auth)
 		(hand $?before ?num $?after)
+		(discardpile $?discardpile)
 		(cardsplayed $?cardsplayed)
 		)
 	?op <- (player
@@ -113,6 +145,7 @@
 		(authority (+ ?auth ?player_auth))
 		(hand $?before $?after)
 		(cardsplayed $?cardsplayed ?num)
+		(discardpile $?discardpile ?num)
 		)
 	(modify ?op (discard (+ ?discard ?opdiscard)))
 	(if (= 1 ?has_special) 
@@ -149,12 +182,13 @@
 			(bind ?startplayer ?n2) 
 			(bind ?scndplayer ?n1))
 	(assert (turn (player ?startplayer)))
-	(modify ?p1 (discard 2))
-	(modify ?p2 (discard 1))
+	;(modify ?p1 (discard 2))
+	;(modify ?p2 (discard 1))
 	(printout t ?startplayer " will begin" crlf)
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
-	(assert (playerchoice))
+	(assert (gamestatus))
+	;(assert (playerchoice))
 )
 
 (defrule update-tradepile
