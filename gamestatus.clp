@@ -30,30 +30,16 @@
 		(authority ?auth)
 		(playertype ?ptype)
 		)
+	(player (name ?otherplayer))
+	(test (neq ?otherplayer ?pname))
+	(turn (player ?curplayer))
 	=>
+	(retract ?f)
 	(printout t ?pname " authority: " ?auth)
 	(printout t crlf)
-	(retract ?f)
-	(assert (done ?pname))
-)
-
-(defrule prompt-print-other-player "assert printplayer facts with name of different player than has been shown before"
-	(done ?pname)
-	(player (name ?p2))
-	(test (neq ?pname ?p2))
-	(not (done ?p2))
-	=>
-	(assert (printplayer ?p2))
-)
-
-(defrule begin-gather-traderow-cardnames
-	(done ?pname1)
-	(done ?pname2)
-	(test (neq ?pname1 ?pname2))
-	(not (gather))
-	(not (done "TradeRow"))
-	=>
-	(assert (gather))
+	(if (eq ?pname ?curplayer) 
+		then (assert (printplayer ?otherplayer))
+		else (assert (gather)))
 )
 
 (defrule gather-traderow-cardnames
@@ -74,18 +60,17 @@
 	(loop-for-count (?i 1 (length$ $?cards))
 		(printout t "   " (nth$ ?i $?cards) crlf))
 	(retract ?f)
-	(assert (done "TradeRow"))
+;	(assert (done "TradeRow"))
 	)
 
 (defrule cleanup
 	?f1 <- (done ?pname1)
 	?f2 <- (done ?pname2)
 	?f3 <- (done "TradeRow")
-	(test (neq ?pname1 ?pname2))
-	(test (neq ?pname1 "TradeRow"))
-	(test (neq ?pname2 "TradeRow"))
+	(test (neq ?pname1 ?pname2 "TradeRow"))
 	=>
-	(retract ?f1 ?f2 ?f3))
+	(retract ?f1 ?f2 ?f3)
+)
 
 		
 
