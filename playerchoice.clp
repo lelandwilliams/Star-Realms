@@ -100,7 +100,7 @@
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
 	?f <- (prompt)
 	=>
-	(printout t ?player " Choose an action" crlf)
+	(printout t ?player ": choose an action" crlf)
 	(loop-for-count (?n (length$ ?choices)) do
 		(printout t ?n ") " (nth$ ?n $?choicetypes) " " (nth$ ?n $?choices) crlf))
 	(retract ?f)
