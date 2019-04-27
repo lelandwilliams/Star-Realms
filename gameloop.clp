@@ -1,8 +1,25 @@
+; **************************************************
+; *		   gameloop.clp                    *
+; *		 by Leland Williams                * 
+; *                                                *
+; *  Rules for module MAIN that control the flow   *
+; *  between modules and game events.              *
+; *                                                *
+; **************************************************
+
 (defrule makeanouncement
 	?f <- (anounce (player ?p) (eventtype ?e) (num ?n))
 	(card (id ?n) (name ?cardname))
 	=>
 	(printout t ?p " " ?e " " ?cardname crlf)
+	(retract ?f)
+)
+
+(defrule makeanouncement2
+	?f <- (anounce (player ?p) (eventtype ?e) (num ?n))
+	(test (lexemep ?n))
+	=>
+	(printout t ?p " " ?e " " ?n crlf)
 	(retract ?f)
 )
 
@@ -24,6 +41,7 @@
 	(not (endturn))
 	(not (play))
 	(not (gamestatus))
+	(not (gameover))
 	(turn (player ?player))
 	(player
 		(name ?player)
@@ -36,9 +54,17 @@
 	(focus PLAYERCHOICE)
 )
 
+(defrule billpaxton "Game Over, Man"
+	(gameover)
+	=>
+	(printout t "*** The Game is Over ***" crlf crlf "Final Status" crlf)
+	(assert (gamestatus))
+)
+
 (defrule prompt-playerchoice
 	(not (endturn))
 	(not (playerchoice))
+	(not (gameover))
 	(deck (faceup-cards $?faceup))
 	(test (= 5 (length$ $?faceup)))
 	=>
@@ -48,6 +74,7 @@
 (defrule discard-switch "Once end of turn upkeep is finished, switch focus"
 	(not (draw))
 	(not (anounce))
+	(not (gameover))
 	?f <- (discard)
 	=>
 	(retract ?f)
@@ -188,7 +215,6 @@
 	(assert (draw (player ?startplayer) (num 3)))
 	(assert (draw (player ?scndplayer) (num 5)))
 	(assert (gamestatus))
-	;(assert (playerchoice))
 )
 
 (defrule update-tradepile
@@ -201,5 +227,4 @@
 	(modify ?d 
 		(facedown-cards (delete-member$ $?facedown ?id))
 		(faceup-cards $?faceup ?id))
-;(assert (anounce (player "Trade Row") (eventtype "Adds") (num ?id)))
 )
