@@ -1,5 +1,6 @@
 ; **************************************************
 ; *		   combat.clp                      * 
+; *		 by Leland Williams                * 
 ; *                                                *
 ; * This module only is called from GAMESTATUS     *
 ; * It handles player combat.			   *
@@ -191,7 +192,7 @@
 	(return)
 )
 
-(defrule hurt-opponent
+(defrule hurt-opponent "When a player chooses to apply combat to their opoponent, reduce the opponent's authority and test for end of game"
 	?f <- (gather (names $?names))
 	?p <- (prompt ?val)
 	(test (< 0 ?val))
@@ -206,8 +207,10 @@
 	(modify ?t (combat 0))
 	(retract ?f)
 	(retract ?p)
-	(modify ?op (authority (- ?auth ?combat)))
-	(assert (anounce (player ?curplayer) (eventtype "hurt opponent") (num ?combat)))
+	(bind ?auth (- ?auth ?combat))
+	(modify ?op (authority ?auth))
+	(if (<= ?auth 0) then (assert (gameover)))
+	(assert (anounce (player ?curplayer) (eventtype "hurt opponent") (num ?otherplayer)))
 	(return)
 )
 
