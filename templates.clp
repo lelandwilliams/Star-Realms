@@ -22,6 +22,8 @@
 	(multislot choicetype (type STRING))
 )
 
+(deftemplate gamestatus "a sentinal to switch to module GAMESTATUS")
+
 (deftemplate play "a template for the card chosen by a player ot play"
 	(slot id (type INTEGER))
 )
