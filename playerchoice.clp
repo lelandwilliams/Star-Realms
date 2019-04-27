@@ -23,7 +23,7 @@
 )
 
 
-(defrule addcombatchoice "Add destroying an outpost to list of choices"
+(defrule addcombatchoice-outpost "Add destroying an outpost to list of choices"
 	(turn (player ?curplayer) (combat ?combat&:(> ?combat 0)))
 	?cl <- (choicelist (choices $?choices) (choicetype $?choicetypes))
 	(player (name ?pname) (outposts $? ?id $?))
@@ -135,7 +135,6 @@
 	(modify ?p (discardpile ?id $?discards))
 	(modify ?d (faceup-cards $?before $?after))
 	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
-	;(assert (playerchoice))
 )
 
 (defrule resolve-buy-explorer "process the choice to buy an explorer"
@@ -151,7 +150,6 @@
 	(modify ?p (discardpile ?id $?discards))
 	(modify ?d (explorers $?rest))
 	(assert (anounce  (player ?player) (eventtype "buys") (num ?id)))
-	;(assert (playerchoice))
 )
 
 (defrule resolve-cardplay "process the choice to play a card"
@@ -164,6 +162,13 @@
 	(assert (play (id ?id)))
 	;(assert (playerchoice))
 )
+
+(defrule resolve-combat "blow something up"
+	?fc <- (finalchoice  (choicetype "Combat"))
+	=>
+	(retract ?fc)
+	(focus COMBAT)
+	)
 
 (defrule resolve-endturn "process the choice to end the turn"
 	?fc <- (finalchoice (choice ?cardname) (choicetype "End Turn"))
