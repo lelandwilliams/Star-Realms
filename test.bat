@@ -5,6 +5,7 @@
 (load gameloop.clp)
 (load discard.clp)
 (load playerchoice.clp)
+(load gamestatus.clp)
 ;(watch focus)
 ;(watch rules)
 (reset)
