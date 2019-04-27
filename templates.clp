@@ -1,7 +1,8 @@
 (deftemplate anounce "This fact triggers printing of an event"
 	(slot player (type STRING))
 	(slot eventtype (type STRING))
-	(slot num (type INTEGER))
+	;(slot num (type INTEGER))
+	(slot num)
 )
 
 (deftemplate draw
@@ -22,6 +23,7 @@
 	(multislot choicetype (type STRING))
 )
 
+(deftemplate gameover "a sentinal that the game is now over")
 (deftemplate gamestatus "a sentinal to switch to module GAMESTATUS")
 
 (deftemplate play "a template for the card chosen by a player ot play"
