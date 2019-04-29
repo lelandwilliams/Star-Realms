@@ -1,3 +1,12 @@
+; **************************************************
+; *		   discard.clp                     *
+; *		 by Leland Williams                * 
+; *                                                *
+; *       A module to enfore player discards       *
+; *     Called from gameloop, and returns there    *
+; *                                                *
+; **************************************************
+
 (defmodule DISCARD
 	(import MAIN ?ALL))
 

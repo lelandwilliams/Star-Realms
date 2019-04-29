@@ -4,6 +4,7 @@
 ; *                                                *
 ; *  Rules for module MAIN that control the flow   *
 ; *  between modules and game events.              *
+; *  teststartrule is the first rule to fire       *
 ; *                                                *
 ; **************************************************
 

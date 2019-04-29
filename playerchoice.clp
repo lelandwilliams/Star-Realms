@@ -1,3 +1,12 @@
+; **************************************************
+; *		 playerchoice.clp                  * 
+; *		 by Leland Williams                * 
+; *                                                *
+; *  The module to gather and offer to the player  *
+; *  all the legal decisions they have.            *
+; *                                                *
+; **************************************************
+
 (defmodule PLAYERCHOICE
 	(import MAIN ?ALL))
 

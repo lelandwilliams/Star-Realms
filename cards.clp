@@ -1,3 +1,12 @@
+; **************************************************
+; *		    cards.clp                      * 
+; *		 by Leland Williams                * 
+; *                                                *
+; * Containts the card template and the definition *
+; * Of all the cards in the set                    *
+; *                                                *
+; **************************************************
+
 (deftemplate card
 	(slot name (type STRING) (default ?NONE))
 	(slot id (type INTEGER) (default ?NONE))

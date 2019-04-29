@@ -1,3 +1,12 @@
+; **************************************************
+; *		  templates.clp                    *
+; *		 by Leland Williams                * 
+; *                                                *
+; *   Contains templates for all the facts shared  *
+; *   across modules.                              *
+; *                                                *
+; **************************************************
+
 (deftemplate anounce "This fact triggers printing of an event"
 	(slot player (type STRING))
 	(slot eventtype (type STRING))
