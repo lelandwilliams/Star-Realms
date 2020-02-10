@@ -7,7 +7,7 @@ to work on, it processes the fact, often altering the fact landscape.
 
 For Star Realms, the facts are:
 * The card definitions: name, effects, etc.
-* the game state: player HP (authority), whose turn it is, and so on.
-* the turn state: whcih phase it is, which card effects are resolved/unresolved, etc
+* the game state: player HP (authority), whose turn it is, which cards are in a players hand/discard pile/draw pile,  and so on.
+* the turn state: which phase of the turnit is, which card effects are resolved/unresolved, etc
 
 The expert system used is CLIPS, which was developed by and for NASA, and is open source.
